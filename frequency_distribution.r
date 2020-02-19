@@ -10,7 +10,7 @@ class.width <- nclass.Sturges(data)
 cat("class width = ", class.width, "\n")
 
 # separate each classes
-# class value
+: class value
 # class frequency
 # relative frequency
 
@@ -26,7 +26,7 @@ class.cls7 <- subset(sd, 67 <= sd)
 get_class_value <- function (cls, dat) {
   cls.max <- max(cls)
   cls.min <- min(cls)
-  cls.val <- (class.cls1.max + class.cls1.min)/2
+  cls.val <- (class.cls1.max + class.cls1.min) / 2
   cls.frq <- length(cls)
   cls.rfr <- cls.frq / dat.length
   cat("class value = ",              cls.val, "\n")
