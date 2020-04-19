@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 setwd("C:/Users/yuusaku.hayashi/project/hysr")
 df <- read.csv("screen.csv",header=T,row.names=1)
 #ans <- lm(df$Vc‾df[,c(3,2,1)])
@@ -171,4 +170,3 @@ class.sumrfr <- class.sumfrq / length(data)     ; class.sumrfr
 #    row.names=F,
 #    col.names=F)
 #write.table(res,"result2.csv",append=T,quote=F,sep=",",row.names=T,col.names=F)
->>>>>>> 0446aae20b004fc90315ed25d5c762342eed5d33
