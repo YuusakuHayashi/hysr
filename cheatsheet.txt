@@ -1,0 +1,38 @@
+2_dataframe
+    names(DATAFRAME) : データフレームに含まれる変数を知る
+    attach(DATAFRAME) : これによって、特定のデータ系列を参照できるようになる
+                        (普通に記述する場合はDATAFRAME$COLUMN など記述しなければならない)
+    summary(DATAFRAME): データフレームを要約
+                        連続型変数の列は、算術平均、最大値、最小値、中央値、第1四分位点、第3四分位点
+                        カテ型変数の列は、その集計
+    aggregate(DATAFRAME, list({Group1 =} Y), STATISTICS) : カテ型変数Yのカテゴリーごとの各Y列の統計量計算を行う
+                        (Y列が連続型変数の場合、統計量計算が可能だが、カテ型変数の場合NAになる)
+                        (Group1 は集計カテゴリの項目名、無指定の場合Group1 となる)
+                        aggregate(DATAFRAME, list(Y1, Y2, ...), STATISTICS) のようにY列を複数していすることが
+                        できる。その場合、Y1=A AND Y2=B, Y1=A AND Y2=C, ...のように組み合わせ毎集計される。
+    head(DATA) : 先頭数行のみ表示する
+    which(CONDITION): 条件に合致するデータデータのインデクスを表示する
+                      外れ値(入力ミス)を検証するなどの際に利用できる
+    table(DATAFRAME): カテ型変数の各値(要因水準)毎のデータ数の集計などを行う
+                      スペスミスを検証するなどの際に利用できる
+
+
+データフレーム
+    複数列の要素を参照する場合、ヘッダの表示がなされると思われる・・・
+    つまり、行全体の参照は、ヘッダが付く
+    インデクスは、特定の要素(X,Y)の参照でない限り表示される
+    DATAFRAME : データフレーム全体を表示
+    DATAFRAME[Y]: Y列全体(インデクス、ヘッダ含む)
+    DATAFRAME[,Y]: Y列全体(ヘッダ除く)
+    DATAFRAME[X,]: X行全体(インデクス含む)
+    DATAFRAME[X,Y]: X行Y列の要素 
+    DATAFRAME[,YA:YB]: X行Y列の要素 
+    DATAFRAME[YA > C & YB < D,]のような、抽出する行の指定が可能
+    DATAFRAME[order(Y),] でY列の値によって、行全体をソートすることが可能 
+    DATAFRAME[,c(X1, X2)]: 列をインデクスで指定することも可能 
+    rev(DATAFRAME): 列順を逆転
+    order(DATAFRAME[,Y]): Y列の値によって行全体をソートし、インデクスを表示
+    rev(DATAFRAME[,Y]): Y列の値によって行全体を逆順ソートし、Y列の値を表示
+    DATAFRAME[rev(Y)]: Y列の値によって、行全体を逆順ソートし、Y列の値を表示(インデクス含む)
+    DATAFRAME[rev(order(DATAFRAME[,Y])),]: Y列の値によって、行全体を逆順ソートし、データフレーム全体を表示
+
