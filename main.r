@@ -17,7 +17,18 @@
 ## 2値、計4値の棒グラフが出力される 
 
 yvals   <- read.csv(paste(Sys.getenv("USERPROFILE"), "\\project\\hysr\\03_center\\yvalues.csv", sep=""))
-total <- sum(y)
-n <- length(y)
-ybar <- total / n
-ybar <- sum(y) / length(y)
+attach(yvals)
+
+mean(y)
+
+median(y)
+# median(Y) は Yが偶数個の場合、真ん中の2データの値の平均を使う
+
+insects <- 100000^0.2
+# ^ ... べき乗演算子
+# (分数でべき乗をすると、累乗根n√Xが求まる)
+
+insects <- c(1, 10, 1000, 10, 1)
+ex      <- exp(mean(log(insects)))
+# log(VEC) で各要素に対し、自然対数をとる
+# その自然対数の平均で指数関数を計算すると、
