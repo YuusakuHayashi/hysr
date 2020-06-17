@@ -17,3 +17,7 @@
 ## 2値、計4値の棒グラフが出力される 
 
 yvals   <- read.csv(paste(Sys.getenv("USERPROFILE"), "\\project\\hysr\\03_center\\yvalues.csv", sep=""))
+total <- sum(y)
+n <- length(y)
+ybar <- total / n
+ybar <- sum(y) / length(y)
