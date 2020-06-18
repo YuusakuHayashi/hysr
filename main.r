@@ -16,19 +16,34 @@
 ## この時、phosphorus=no, yes のそれぞれに、nitrogen=yes, no の
 ## 2値、計4値の棒グラフが出力される 
 
-yvals   <- read.csv(paste(Sys.getenv("USERPROFILE"), "\\project\\hysr\\03_center\\yvalues.csv", sep=""))
-attach(yvals)
-
-mean(y)
-
-median(y)
+#yvals   <- read.csv(paste(Sys.getenv("USERPROFILE"), "\\project\\hysr\\03_center\\yvalues.csv", sep=""))
+#attach(yvals)
+#
+#mean(y)
+#
+#median(y)
 # median(Y) は Yが偶数個の場合、真ん中の2データの値の平均を使う
 
-insects <- 100000^0.2
+#insects <- 100000^0.2
 # ^ ... べき乗演算子
 # (分数でべき乗をすると、累乗根n√Xが求まる)
 
-insects <- c(1, 10, 1000, 10, 1)
-ex      <- exp(mean(log(insects)))
+#insects <- c(1, 10, 1000, 10, 1)
+#ex      <- exp(mean(log(insects)))
 # log(VEC) で各要素に対し、自然対数をとる
 # その自然対数の平均で指数関数を計算すると、
+
+#upper <- rep(c(100, 200), 10)
+#plot(upper, type="l", ylim=c(0,250), ylab="y", col="blue")
+#lower <- rep(c(10, 20), 10)
+#lines(lower, col="blue")
+## lines() で既に作成したプロットに描画できる
+
+upper <- rep(c(100, 200), 10)
+plot(log(upper), type="l", ylim=c(0,10), ylab="y", col="blue")
+lower <- rep(c(10, 20), 10)
+lines(log(lower), col="blue")
+# 変動率を見たいとき、
+# この二者(upper, lower)は実際には同じ変動率を持つが、プロットすると、
+# upper は母数が大きいため、lowerより大きな変動をしているように
+# 見えやすい。誤解しないように対数を取って確認する
