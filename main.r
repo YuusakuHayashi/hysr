@@ -1,3 +1,4 @@
+# Section-2 Dataframe
 #worms   <- read.csv(paste(Sys.getenv("USERPROFILE"), "\\project\\hysr\\02_dataframe\\worms.csv", sep=""))
 #das     <- read.csv(paste(Sys.getenv("USERPROFILE"), "\\project\\hysr\\02_dataframe\\das.csv", sep=""))
 #yields  <- read.csv(paste(Sys.getenv("USERPROFILE"), "\\project\\hysr\\02_dataframe\\fertyield.csv", sep=""))
@@ -39,11 +40,294 @@
 #lines(lower, col="blue")
 ## lines() で既に作成したプロットに描画できる
 
-upper <- rep(c(100, 200), 10)
-plot(log(upper), type="l", ylim=c(0,10), ylab="y", col="blue")
-lower <- rep(c(10, 20), 10)
-lines(log(lower), col="blue")
+# Section-3 Center Value
+#upper <- rep(c(100, 200), 10)
+#plot(log(upper), type="l", ylim=c(0,10), ylab="y", col="blue")
+#lower <- rep(c(10, 20), 10)
+#lines(log(lower), col="blue")
 # 変動率を見たいとき、
 # この二者(upper, lower)は実際には同じ変動率を持つが、プロットすると、
 # upper は母数が大きいため、lowerより大きな変動をしているように
 # 見えやすい。誤解しないように対数を取って確認する
+
+
+# Section-4 Diviation
+#y <- c(13, 7, 5, 12, 9, 15, 6, 11, 9, 7, 12)
+#plot(y, ylim=c(0, 20), pch=16, col="blue")
+# range(y)
+# range(VEC) はベクトルの最大値、最小値の２つを表示する
+#lines(c(4.5, 5.5), c(15, 15), lty=2, col="red")
+#lines(c(3.5, 4.5), c(5, 5), lty=2, col="red")
+#lines(c(4.5, 4.5), c(5, 15), col="red")
+# lty は線のスタイルを定義している、lty=2 は点線
+
+#y <- c(13, 7, 5, 12, 9, 15, 6, 11, 9, 7, 12)
+#plot(y, ylim=c(0, 20), pch=16, col="blue")
+#abline(h=mean(y))
+# abline()でグラフに軸線を引く？
+# h=Y でX軸に水平な線を引いている
+#for(i in 1:length(y)) { lines(c(i, i), c(mean(y), y[i]), col="red") }
+
+#y <- c(13, 7, 5, 12, 9, 15, 6, 11, 9, 7, 12)
+#print(sum((y - mean(y))^2))
+## 平方和
+#print(var(y))
+## 分散
+#garden  <- read.csv(paste(Sys.getenv("USERPROFILE"), "\\project\\hysr\\04_variance\\gardens.csv", sep=""))
+#attach(garden)
+#if (var(gardenB) > var(gardenC) ) {
+#    gdn_f <- var(gardenB) / var(gardenC)
+#    gdn_n <- gardenB
+#    gdn_d <- gardenC
+#} else {
+#    gdn_f <- var(gardenC) / var(gardenB)
+#    gdn_n <- gardenC
+#    gdn_d <- gardenB
+#}
+#gdn_nfd <- length(gdn_n) - 1
+#gdn_dfd <- length(gdn_d) - 1
+#gdn_pf  <- pf(gdn_f, gdn_nfd, gdn_dfd)
+#bothp   <- 2*(1 - gdn_pf)
+## pf(F, NUMERATOR, DEMOMINATOR) ... f分布の累積分布関数
+##    F ... F値
+##    NUMERATOR   ... 分子の分散の自由度
+##    DEMOMINATOR ... 分母の分散の自由度
+## pf() でそのF1値以下が発生する確率が求められるので、
+## 1 - pf() でF1値以上場合の発生確率が求まる
+## ただし、分散が有意に低い場合(F2以下)の両側の確率は
+## 2 * (1 - pf()) となる
+## +-----+----------+----------+-----
+## 0     F2         M          F1
+
+#garden  <- read.csv(paste(Sys.getenv("USERPROFILE"), "\\project\\hysr\\04_variance\\gardens.csv", sep=""))
+#attach(garden)
+#print(var.test(gardenB, gardenC))
+## var.test(S1, S2) ... F検定を行う
+##     S1 ... 標本1
+##     S2 ... 標本2
+## 出力結果は
+## F値はS1とS2の分散比
+## num df値は、分子の分散の自由度(numerator degree of free)
+## denom df値は、分子の分散の自由度(denominator degree of free)
+## p-value値は、2つの母分散が等しいと仮定した場合に、
+## この分散比が発生する確率
+## alternative hypothesis は対立仮説で、分散が等しくないとしている
+## 95 percent confidence interval が95%点であり、
+## sample estimatesでサンプルとしてのF値を計算している
+
+#plot(c(0,32), c(0,15), type="n", xlab="Sample size", ylab="Variance")
+#for (n in seq(3, 31, 2)) {
+#    for (i in 1:100) {
+#        x <- rnorm(n, mean=10, sd=2)
+#        points(n, var(x))
+#    }
+#}
+## seq(FROM, TO, DIV) で
+## rnorm(n, mean=M, sd=S) で
+## N個の正規乱数(xi ~ N(10, 2))を作成し、
+## その標本分散を算出する
+## さらに、3 から31まで2間隔のベクトル毎
+## (3, 5, ..., 31)
+## これを30回繰り返した処理を行う
+## つまり、Vi=3よりも、Vi=31の時の方が
+## 分散は小さくまとまる
+
+
+#garden  <- read.csv(paste(Sys.getenv("USERPROFILE"), "\\project\\hysr\\04_variance\\gardens.csv", sep=""))
+#attach(garden)
+#print(sqrt(var(gardenA) / length(gardenA)))
+#print(sqrt(var(gardenB) / length(gardenB)))
+#print(sqrt(var(gardenC) / length(gardenC)))
+# sqrt() ... 平方根
+# sqrt(var(X) / length(X)) は、標準誤差となる
+
+#print(qt(0.025, 9))
+#print(qt(0.975, 9))
+## qt(ALPHA, FD) ... t値を出力する
+##    ALPHA ... α点
+##    FD    ... 自由度(標本数-1)
+#print(qt(0.975, 9) * sqrt(var(gardenB) / length(gardenB)))
+#print(qt(0.025, 9) * sqrt(var(gardenB) / length(gardenB)))
+## 信頼区間＝標本平均±t値×標準誤差で計算できる
+
+
+# ---------------------------------------------------------------------------------------------------------
+#skew    <- read.csv(paste(Sys.getenv("USERPROFILE"), "\\project\\hysr\\04_variance\\skewdata.csv", sep=""))
+#attach(skew)
+#names(skew)
+## names(DATAFRAME) : データフレームに含まれる変数を知る
+#plot(c(0, 30), c(0, 60), type="n", xlab="Sample size", ylab="Confidence interval")
+#for (k in seq(6, 30, 3)) {
+#    a <- numeric(10000)
+#    for (i in 1:10000) {
+#        a[i] <- mean(sample(values, k, replace=T))
+#    }
+#    points(c(k, k), quantile(a, c(0.025, 0.975)), type="b", pch=21, bg="red")
+#    #points(c(k, k, k), quantile(a, c(0.025, 0.50, 0.975)), type="b", pch=21, bg="red")
+#    # このように記述すれば、3点間で描画する
+#}
+## numeric(N) ... 0をN個並べたベクトルを生成
+## sample(VEC, N, replace=BOOL) ... 無作為抽出を行う
+##    N ... 抽出数
+##    replace=BOOL ... 復元抽出か非復元抽出か
+## quantile(VEC, (X1, X2, ...)) ... ベクトルのX1%地点の値、X2%地点...の要素を抽出する
+## ブートストラップ法... 非復元抽出による標本平均計算を大量の回数行い、
+##                       その中から、特定のパーセント点の値を取り出す。
+##                       標本平均は、母平均付近に固まっていると考えられる
+##                       (抽出数が多いほど、母平均の中心に固まる)
+##                       その中からα%点に該当する標本平均値を抽出する
+#
+#
+#xv <- seq(5, 30.5, 0.1)
+#yv <- mean(values) + 1.96 * sqrt(var(values) / xv)
+#lines(xv, yv, col="blue")
+#yv <- mean(values) - 1.96 * sqrt(var(values) / xv)
+#lines(xv, yv, col="blue")
+## 標準正規分布のp値からの区間
+#
+#
+#yv <- mean(values) + qt(0.975, xv-1) * sqrt(var(values) / xv)
+#lines(xv, yv, lty=2, col="purple")
+#yv <- mean(values) - qt(0.975, xv-1) * sqrt(var(values) / xv)
+#lines(xv, yv, lty=2, col="purple")
+## t値からの区間
+# ---------------------------------------------------------------------------------------------------------
+
+#ex  <- read.csv(paste(Sys.getenv("USERPROFILE"), "\\project\\hysr\\05_one_data\\example.csv", sep=""))
+#attach(ex)
+#names(ex)
+#print(summary(ex))
+## summary() ... 標本の要約を行う
+## Min    ... 最小値
+## 1st Qu ... 第1四分位点
+## Median ... メディアン
+## Mean   ... 平均値
+## 3rd Qu ... 第3四分位点
+## Max    ... 最大値
+#boxplot(y)
+## 箱ひげ図を描画する
+#hist(y)
+## ヒストグラムを作成する
+## ヒストグラムの境界点
+##             +---+
+##             |   |
+##   +---+     |   |     +---+
+##   |   |     |   |     |   |
+##   |   |     |   |     |   |
+## ---------1---------2---------3
+##  0 ~ 0.9 | 1 ~ 1.9 | 2 ~ 2.9 |
+## といった具合に、境界点の値は右側に含まれる
+
+##print(table(y))
+## 値毎の度数を表示する
+## length(table(x)) で重複しないデータ個数を表示する
+## ヒストグラムのような度数を示すプロットにおいて、
+## その度数がどれも1であるものは敷物プロットと呼ばれる
+#print(range(y))
+#print(diff(range(y)))
+## diff() ... 2点間の範囲の量を出力する
+
+#score <- 2:12
+#ways <- c(1,2,3,4,5,6,5,4,3,2,1)
+## ways は各scoreが発生する組み合わせ数
+## ex) waysの中央7は(1,6), (2,5), (3,4), (4,3), (5,2), (6,1) の6通りある
+#game <- rep(score, ways)
+#sample(game, 1)
+## rep(X, Y) ... Xベクトルの各要素をY回発生させる
+##               Yがベクトルなら、Xベクトルの各要素とYベクトルの各要素回発生させる
+#outcome <- numeric(10000)
+#for (i in 1:10000) { outcome[i] <- sample(game, 1) }
+#hist(outcome, breaks=(1.5:12.5))
+## breaks で横軸の範囲を指定することが出来る
+
+
+#mean.score <- numeric(10000)
+#for (i in 1:10000) { mean.score[i] <- mean(sample(game, 3)) }
+#hist(mean.score, breaks=(1.5:12.5), ylim=c(0, 3000), col="blue", main="")
+## breaks で横軸の範囲を指定することが出来る
+#xv <- seq(2, 12, 0.1)
+#yv <- 10000*dnorm(xv, mean(mean.score), sd(mean.score))
+#lines(xv, yv, col="red")
+## 標本平均を分布させると、中心極限定理が現れる
+## dnorm(Q, M, S) ... N(M, S) の分布において、XQの時の確率を出力(確率密度)
+
+#standard.deviation <- seq(-3, 3, 0.01)
+#pd <- dnorm(standard.deviation)
+#plot(standard.deviation, pd, type="l", col="blue")
+## dnorm() に平均と標準偏差を指定しないと、標準正規分布を出力する
+## type="l" ... 線プロット
+## 標準積分布に従うXは-3~3でほぼ全て出現する
+
+#print(pnorm(-2))
+#print(pnorm(-1))
+#print(1 - pnorm(2))
+## -∞~ q までの確率(累積分布関数)はpnorm(Q) で表される
+## 上側確率(q ~ ∞)は pnorm(1 - Q )で求められる
+
+#qnorm(c(0.025, 0.975))
+## dnorm(Q) が、Q点の確率D%を出力するのに対し、
+## qnorm(D) はD%となる分位点Q点を出力する
+
+#xv <- seq(-3, 3, 0.01)
+#yv <- dnorm(xv)
+#plot(c(3, -3), c(0, 0.3), xlim=c(3, -3), ylim=c(0, 0.4), type="n", ylab="pd", xlab="standard.deviations")
+#polygon(c(1.96, 1.96, -1.96, -1.96, xv[105:496]), 
+#        c(yv[496], 0, 0, yv[105], yv[105:496]),
+#        col="lightblue")
+#polygon(c(-1.96, -1.96, xv[1], xv[1:104]), 
+#        c(yv[104], 0, 0, yv[1:104]),
+#        col="red")
+#polygon(c(xv[601], xv[601], 1.96, 1.96, xv[497:601]), 
+#        c(yv[601], 0, 0, yv[496:601]),
+#        col="red")
+#text(0, 0.2, "95%")
+#lines(xv, yv)
+## polygon() でプロットに彩色が出来る
+#
+#
+#ht <- seq(150, 190, 0.01)
+#plot(ht, dnorm(ht, 170, 8), type="l", ylab="Probability density", xlab="Height")
+## pnorm() の引数はZ値のため、
+## ある正規分布から知りたい確率を求めるには、
+## z変換を行う必要がある
+#z <- (160 - 170) / 8
+#print(pnorm(z))
+## 抽出した標本が160cm 以下の身長の確率
+
+
+#skew    <- read.csv(paste(Sys.getenv("USERPROFILE"), "\\project\\hysr\\05_one_data\\skewdata.csv", sep=""))
+#attach(skew)
+#qqnorm(values)
+#qqline(values, lty=2)
+## qqnorm () ... QQプロットを描画
+## qqline () ... 最適近似直線を描画
+
+
+#light   <- read.csv(paste(Sys.getenv("USERPROFILE"), "\\project\\hysr\\05_one_data\\light.csv", sep=""))
+#attach(light)
+#print(names(light))
+#hist(speed)
+
+light   <- read.csv(paste(Sys.getenv("USERPROFILE"), "\\project\\hysr\\05_one_data\\light.csv", sep=""))
+attach(light)
+print(wilcox.test(speed, mu=990))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
