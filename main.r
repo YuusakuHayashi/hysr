@@ -1,3 +1,6 @@
+
+
+
 # Section-2 Dataframe
 #worms   <- read.csv(paste(Sys.getenv("USERPROFILE"), "\\project\\hysr\\02_dataframe\\worms.csv", sep=""))
 #das     <- read.csv(paste(Sys.getenv("USERPROFILE"), "\\project\\hysr\\02_dataframe\\das.csv", sep=""))
@@ -308,12 +311,48 @@
 #print(names(light))
 #hist(speed)
 
-light   <- read.csv(paste(Sys.getenv("USERPROFILE"), "\\project\\hysr\\05_one_data\\light.csv", sep=""))
-attach(light)
-print(wilcox.test(speed, mu=990))
+#light   <- read.csv(paste(Sys.getenv("USERPROFILE"), "\\project\\hysr\\05_one_data\\light.csv", sep=""))
+#attach(light)
+#print(wilcox.test(speed, mu=990))
+## wilcox.test(VEC, M) ... ウィルコクソンんの符号順位検定を行う
 
 
+#light   <- read.csv(paste(Sys.getenv("USERPROFILE"), "\\project\\hysr\\05_one_data\\light.csv", sep=""))
+#attach(light)
+#a <- numeric(10000)
+#for (i in 1:10000) { a[i] <- mean(sample(speed, replace=T)) }
+#hist(a)
+#print(max(a))
+## p91. ブートストラップ法による1標本仮説検定問題
+## sample() は抽出回数の指定がない場合、ベクターサイズ分抽出する。
+## 復元抽出のため中心極限定理が現れる
 
+
+#p.93 スチューデントのt分布
+#plot(c(0, 30), c(0, 10), type="n", xlab="Degrees of freedom", ylab="Student t value")
+#lines(1:30, qt(0.975, df=1:30))
+#abline(h=1.96, lty=2, col="blue")
+## plot()  ... type="n" は何もプロットしない
+
+xvs <- seq(-4, 4, 0.01)
+plot(xvs, dnorm(xvs), type="l", ylab="Probability density", xlab="Deviates")
+lines(xvs, dt(xvs, df=5), col="red")
+# t分布は厚めの裾を持つ
+# そのため、信頼区間が広くなる
+# (裾が厚くなる代わり、中心の確率が少なくなるので)
+# dnorm(X)     ... 正規分布に従うxの確率密度を出力
+# dt(T, df=DF) ... t分布に従うtの確率密度を出力
+
+
+#p.95 歪度
+skew <- function (x) {
+   m3 <- sum((x - mean(x))^3) / length(x)
+   s3 <- sqrt(var(x))^3
+   return m3 / s3
+}
+# 歪度は平均周りの3次モーメント(m3)を
+# 標準偏差の3乗で割ったもの
+# (これは、標準変化量Zを3乗したものの期待値と同じ)
 
 
 
