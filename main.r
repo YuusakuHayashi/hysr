@@ -334,22 +334,34 @@
 #abline(h=1.96, lty=2, col="blue")
 ## plot()  ... type="n" は何もプロットしない
 
-xvs <- seq(-4, 4, 0.01)
-plot(xvs, dnorm(xvs), type="l", ylab="Probability density", xlab="Deviates")
-lines(xvs, dt(xvs, df=5), col="red")
-# t分布は厚めの裾を持つ
-# そのため、信頼区間が広くなる
-# (裾が厚くなる代わり、中心の確率が少なくなるので)
-# dnorm(X)     ... 正規分布に従うxの確率密度を出力
-# dt(T, df=DF) ... t分布に従うtの確率密度を出力
+#xvs <- seq(-4, 4, 0.01)
+#plot(xvs, dnorm(xvs), type="l", ylab="Probability density", xlab="Deviates")
+#lines(xvs, dt(xvs, df=5), col="red")
+## t分布は厚めの裾を持つ
+## そのため、信頼区間が広くなる
+## (裾が厚くなる代わり、中心の確率が少なくなるので)
+## dnorm(X)     ... 正規分布に従うxの確率密度を出力
+## dt(T, df=DF) ... t分布に従うtの確率密度を出力
 
 
 #p.95 歪度
 skew <- function (x) {
    m3 <- sum((x - mean(x))^3) / length(x)
    s3 <- sqrt(var(x))^3
-   return m3 / s3
+   return (m3 / s3)
 }
+x       <- read.csv(paste(Sys.getenv("USERPROFILE"), "\\project\\hysr\\05_one_data\\skewdata.csv", sep=""))
+attach(x)
+#hist(values, main="", col="lightblue")
+print(skew(values))
+print(skew(values) / sqrt(6 / length(values)))
+
+a <- numeric(10000)
+for (i in 1:10000) {
+    a[i] <- skew(sample(values, replace=T))
+}
+print(sqrt(6      / 10000))
+print(sqrt(var(a) / length(a)))
 # 歪度は平均周りの3次モーメント(m3)を
 # 標準偏差の3乗で割ったもの
 # (これは、標準変化量Zを3乗したものの期待値と同じ)
