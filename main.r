@@ -345,26 +345,154 @@
 
 
 #p.95 歪度
-skew <- function (x) {
-   m3 <- sum((x - mean(x))^3) / length(x)
-   s3 <- sqrt(var(x))^3
-   return (m3 / s3)
-}
-x       <- read.csv(paste(Sys.getenv("USERPROFILE"), "\\project\\hysr\\05_one_data\\skewdata.csv", sep=""))
-attach(x)
+#skew <- function (x) {
+#   m3 <- sum((x - mean(x))^3) / length(x)
+#   s3 <- sqrt(var(x))^3
+#   return (m3 / s3)
+#}
+#x       <- read.csv(paste(Sys.getenv("USERPROFILE"), "\\project\\hysr\\05_one_data\\skewdata.csv", sep=""))
+#attach(x)
 #hist(values, main="", col="lightblue")
-print(skew(values))
-print(skew(values) / sqrt(6 / length(values)))
+#print(skew(values))
+#print(skew(values) / sqrt(6 / length(values)))
 
-a <- numeric(10000)
-for (i in 1:10000) {
-    a[i] <- skew(sample(values, replace=T))
-}
-print(sqrt(6      / 10000))
-print(sqrt(var(a) / length(a)))
-# 歪度は平均周りの3次モーメント(m3)を
-# 標準偏差の3乗で割ったもの
-# (これは、標準変化量Zを3乗したものの期待値と同じ)
+#n     <- 10000
+#sskew <- numeric(n)
+#tskew <- skew(values)
+#dev   <- 0
+#for (i in 1:n) {
+#    sskew[i] <- skew(sample(values, replace=T))
+#    dev      <- dev + (tskew - sskew[i])^2
+#}
+#se_skew <- sqrt(dev / length(sskew))
+#print(paste("st err skew(calc) = ", se_skew))
+#print(paste("st err skew(aprx) = ", sqrt(6 / 30)))
+#hist(sskew)
+## 歪度は平均周りの3次モーメント(m3)を
+## 標準偏差の3乗で割ったもの
+## (これは、標準変化量Zを3乗したものの期待値と同じ)
+## 歪度の標準誤差は、6/Nの平方根で近似値が得られる
+## 歪度を検定するためには、歪度の推定値を標準誤差で
+## 除算することで、N-2のt分布に従うt値になる
+
+
+
+
+
+#p.97 尖度
+#kurtosis <- function(x) {
+#    m4 <- sum((x - mean(x))^4) / length(x)
+#    s4 <- var(x)^2
+#    m4 / s4 - 3
+#}
+#x       <- read.csv(paste(Sys.getenv("USERPROFILE"), "\\project\\hysr\\05_one_data\\skewdata.csv", sep=""))
+#attach(x)
+#print(kurtosis(values))
+#se_kurt <- sqrt(24 / length(values))
+#print(paste("st err skew(aprx) = ", se_kurt))
+## 尖度は平均周りの4次モーメントを(m4)を
+## 標準偏差の4乗(分散の2乗)で割ったもの
+## そこから正規分布の尖度をゼロとするために-3する
+## (m4/s4だと正規分布に従う集団の尖度は3となるため)
+## 尖度の標準誤差は24/Nの平方根で近似値が得られる
+## 尖度を検定するためには、尖度の推定値を標準誤差で
+## 除算することで、N-2のt分布に従うt値になる
+
+
+
+
+
+
+
+
+
+#Section 6 ... 2標本分析
+#p.99 分散の比較
+#print(qf(0.975, 9, 9))
+#f.test.data <- read.csv(paste(Sys.getenv("USERPROFILE"), "\\project\\hysr\\06_two_data\\f.test.data.csv", sep=""))
+#attach(f.test.data)
+#print(names(f.test.data))
+#f.ratio <- var(gardenB) / var(gardenC)
+#if (f.ratio < 1) { f.ratio <- var(gardenC) / var(gardenB) }
+#print(paste("f.ratio = ", f.ratio))
+#f.per   <- 2 * (1 - pf(f.ratio, 9, 9))
+#print(paste("f.per   = ", f.per))
+## qf(ALPHA, DF1, DF2) ... F分布に従うF値の分位点を出力する
+##    ALPHA ... αパーセント点
+##    DF1   ... 大きい方の分散の自由度(N-1)
+##    DF2   ... 小さい方の分散の自由度(N-1)
+## pf(F, DF1, DF2) ... F値の累積確率
+## 分散比の検定．．．母分散が等しいを帰無仮説とすると、
+##                   F値は標本分散１／標本分散２で求まる
+##                   このＦ値における確率を求める
+##                   事前にＦ分布の棄却域を求めておき、
+##                   その確率が棄却域ならば、棄却する
+##                   (通常、標本分散の大小関係が、母分散
+##                   にも表れるはずで、棄却域の上側確率について
+##                   検討するが、
+##                   母分散の大小関係が標本分散のそれと
+##                   異なった時、Ｆ値は１／Ｆ値となるため、
+##                   その場合の確率も求め、棄却域の下側確率以下に
+##                   なるかも検討する)
+#print(var.test(gardenB, gardenC))
+## var.test(X1, X2) ... F検定を行う
+##     X1, X2で、X1は分子、X2が分母の標本となる
+
+
+#p.102 スチューデントのt検定
+#print(qt(0.975, 18))
+#t.test.data <- read.csv(paste(Sys.getenv("USERPROFILE"), "\\project\\hysr\\06_two_data\\t.test.data.csv", sep=""))
+#attach(t.test.data)
+#print(names(t.test.data))
+#ozone <- c(gardenA, gardenB)
+#label <- factor(c(rep("A", 10), rep("B", 10)))
+#boxplot(ozone ~ label, notch=T, xlab="Garden", ylab="Ozone, pphm", col="lightblue")
+#s2A <- var(gardenA)
+#s2B <- var(gardenB)
+#mA  <- mean(gardenA)
+#mB  <- mean(gardenB)
+#t   <- (mA - mB) / sqrt(s2A / length(gardenA) + s2B / length(gardenB))
+#print(paste("t-val   = ", t))
+## factor() ... カテゴリ変数にする
+## ozone ~ label のように書くことで、gardenAをA、gardenBをBのようにカテゴリ分けしている
+## boxplot() のパラメタnotch= にTを指定することで、95%区間を可視化することが出来る
+##   ____________
+##   |          |
+##   |          |  
+##   \          / <- 95% notch
+##    \        /
+##     --------
+##    /        \
+##   /          \ <-  5% notch
+##   |          |
+##   |          |
+##   ¯¯¯¯¯¯¯¯¯¯¯¯  
+
+
+#p.105 ウィルコクソンの順位和検定
+t.test.data <- read.csv(paste(Sys.getenv("USERPROFILE"), "\\project\\hysr\\06_two_data\\t.test.data.csv", sep=""))
+attach(t.test.data)
+ozone <- c(gardenA, gardenB)
+label <- c(rep("A", 10), rep("B", 10))
+combined.ranks <- rank(ozone)
+print(tapply(combined.ranks, label, sum))
+print(wilcox.test(gardenA, gardenB))
+# ウィルコクソンの順位和検定はスチューデントのt検定の
+# ノンパラ版(正規分布を仮定しない)である
+# 2標本を纏めて順位を付ける
+# (ただし、順位タイは同順位で、しかもその順位の平均値にする)
+# (例えば、5位、6位、7位がタイの場合、(5+6+7)/3 = 同率5.6位)
+# 2標本に分解し、それぞれの順位和を求める
+# 小さい方の標本の値が、順位和数表よりも小さければ、
+# 帰無仮説を棄却する
+#     https://data-science.gr.jp/theory/tst_wilcoxon_rank_sum_test.html
+# rank() ... はこの順位付けを出力する
+# wilcox.test(X1, X2) ... 2つの標本に対し、wilcoxの順位和検定を行う
+#     (ただし、この関数は順位和表による検定ではなく、正規近似で求め
+#     z値の評価を起こなう)
+# 
+
+
 
 
 
