@@ -65,13 +65,43 @@
 
 
 #---------------------------------------------------------------
-#標準得点・偏差値得点の計算
-this_year <- c(32, 19, 10, 24, 15)
-ago_10y   <- c(28, 13, 18, 29, 12)
+# 標準得点・偏差値得点の計算
+#this_year <- c(32, 19, 10, 24, 15)
+#ago_10y   <- c(28, 13, 18, 29, 12)
+#
+#B <- 2
+#z <- (mean(this_year) - this_year[B]) / var(this_year)
+#print(paste("z    = ", z)) 
+#t <- 10 * z + 50
+#print(paste("t    = ", t)) 
 
-B <- 2
-z <- (mean(this_year) - this_year[B]) / var(this_year)
-print(paste("z    = ", z)) 
-t <- 10 * z + 50
-print(paste("t    = ", t)) 
+#---------------------------------------------------------------
+# 散布図・相関係数
+election   <- read.csv(paste(Sys.getenv("USERPROFILE"), "\\project\\hysr\\practice\\election.csv", sep=""))
+#print(summary(election[2]))
+#print(summary(election[3]))
+#plot(election[2:3], xlim=c(0,100), ylim=c(0,100), 
+#     xlab="voting rate", ylab="home ownership rate")
 
+print(paste("cor (func)    = ", cor(election[2], election[3])))
+
+# 共分散 sumproduct of diviation
+# x, yの標本数が同じ必要あり
+cov <- function (X, Y) {
+    N    <- length(X)
+    xm   <- mean(X)
+    ym   <- mean(Y)  
+    ans  <- 0
+    for (i in 1:length(X)) {
+        xdiv <- X[i] - xm
+        ydiv <- Y[i] - ym
+        ans  <- ans + xdiv * ydiv
+    }
+    return (ans / N)
+}
+
+s1  = sqrt(var(election[,2]))
+s2  = sqrt(var(election[,3]))
+cov = cov(election[,2], election[,3])
+cor2 = cov / (s1 * s2)
+print(paste("cor (calc)    = ", cor2))
