@@ -470,34 +470,95 @@
 
 
 #p.105 ウィルコクソンの順位和検定
-t.test.data <- read.csv(paste(Sys.getenv("USERPROFILE"), "\\project\\hysr\\06_two_data\\t.test.data.csv", sep=""))
-attach(t.test.data)
-ozone <- c(gardenA, gardenB)
-label <- c(rep("A", 10), rep("B", 10))
-combined.ranks <- rank(ozone)
-print(tapply(combined.ranks, label, sum))
-print(wilcox.test(gardenA, gardenB))
-# ウィルコクソンの順位和検定はスチューデントのt検定の
-# ノンパラ版(正規分布を仮定しない)である
-# 2標本を纏めて順位を付ける
-# (ただし、順位タイは同順位で、しかもその順位の平均値にする)
-# (例えば、5位、6位、7位がタイの場合、(5+6+7)/3 = 同率5.6位)
-# 2標本に分解し、それぞれの順位和を求める
-# 小さい方の標本の値が、順位和数表よりも小さければ、
-# 帰無仮説を棄却する
-#     https://data-science.gr.jp/theory/tst_wilcoxon_rank_sum_test.html
-# rank() ... はこの順位付けを出力する
-# wilcox.test(X1, X2) ... 2つの標本に対し、wilcoxの順位和検定を行う
-#     (ただし、この関数は順位和表による検定ではなく、正規近似で求め
-#     z値の評価を起こなう)
-# 
+#t.test.data <- read.csv(paste(Sys.getenv("USERPROFILE"), "\\project\\hysr\\06_two_data\\t.test.data.csv", sep=""))
+#attach(t.test.data)
+#ozone <- c(gardenA, gardenB)
+#label <- c(rep("A", 10), rep("B", 10))
+#combined.ranks <- rank(ozone)
+#print(tapply(combined.ranks, label, sum))
+#print(wilcox.test(gardenA, gardenB))
+## ウィルコクソンの順位和検定はスチューデントのt検定の
+## ノンパラ版(正規分布を仮定しない)である
+## 2標本を纏めて順位を付ける
+## (ただし、順位タイは同順位で、しかもその順位の平均値にする)
+## (例えば、5位、6位、7位がタイの場合、(5+6+7)/3 = 同率5.6位)
+## 2標本に分解し、それぞれの順位和を求める
+## 小さい方の標本の値が、順位和数表よりも小さければ、
+## 帰無仮説を棄却する
+##     https://data-science.gr.jp/theory/tst_wilcoxon_rank_sum_test.html
+## rank() ... はこの順位付けを出力する
+## wilcox.test(X1, X2) ... 2つの標本に対し、wilcoxの順位和検定を行う
+##     (ただし、この関数は順位和表による検定ではなく、正規近似で求め
+##     z値の評価を起こなう)
+##
+
+#p.107 対標本データの検定
+#streams     <- read.csv(paste(Sys.getenv("USERPROFILE"), "\\project\\hysr\\06_two_data\\streams.csv", sep=""))
+#attach(streams)
+#print(t.test(down, up))
+#print(t.test(down, up, paired=T))
+#print(t.test((up - down)))
+#
+## 対標本であることが明らかな場合、paired=Tを指定する
+## paired=Tを指定したt検定は、２標本の差で１標本t検定したものと同義である
+## 対応の有無について
+##     https://imnstir.blogspot.com/2017/10/blog-post_5.html
 
 
+#p.109 二項検定
+#print(binom.test(1, 9))
+## binom.test(x, n) ... 二項検定を行う
+##     x ... ベルヌーイ試行における成功回数
+##     n ... ベルヌーイ試行における試行回数
+## x = 1 の為、
+## 上記分布はn=9のベルヌーイ分布と同じである
 
 
+#p.111 二項比率検定
+#print(prop.test(c(4, 196), c(40, 3270)))
+## prop.test(VECx, VECy) ... ２項比率検定を行う
+##     VECx ... 成功回数のベクトル 
+##     VECy ... 試行回数のベクトル 
 
 
+#p.111 分割表に関するカイ２乗検定
+# +-------+-------+-------+-------+
+# |       |  blue | blown |  row  |
+# |       |  eyes |  eye  |       |
+# +-------+-------+-------+-------+
+# |       |       |       |       |
+# | blonde|  38   |  11   |  49   |
+# |  hair |       |       |       |
+# +-------+-------+-------+-------+
+# |       |       |       |       |
+# | black |  14   |  51   |  65   |
+# |  hair |       |       |       |
+# +-------+-------+-------+-------+
+# |       |       |       |       |
+# | col   |  52   |  62   | 114   |
+# |       |       |       |       |
+# +-------+-------+-------+-------+
 
+
+E <- function (M) {
+    sum   <- sum(M)
+    r.cnt <- dim(M)[1]
+    c.cnt <- dim(M)[2]
+    r.sum <- rowSums(M)
+    c.sum <- colSums(M)
+    m     <- matrix(1:r.cnt*c.cnt, nrow=r.cnt, ncol=c.cnt)
+    for (i in 1:r.cnt) {
+        for (j in 1:c.cnt) {
+            m[i, j] <- r.sum[i] * c.sum[j] 
+        }
+    }
+    return (m / sum)
+}
+
+m <- matrix(1:4, nrow=2, ncol=2)
+m[1:2, 1:2] <- c(38, 14, 11, 51)
+
+e <- E(m)
 
 
 
