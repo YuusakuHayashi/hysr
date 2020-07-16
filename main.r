@@ -583,45 +583,81 @@
 
 
 #p.116 フィッシャーの正確確率検定
+#fish <- function (M) {
+#    sum   <- sum(M)
+#    r.sum <- rowSums(M)
+#    c.sum <- colSums(M)
+#    nume  <- 1
+#    demo  <- 1
+#    for (i in c(rowSums(M), colSums(M))) {
+#        #face <- ifelse(factorial(i) != 0, factorial(i), 1)
+#        nume <- nume * factorial(i)    
+#    }
+#    vec <- matrix(as.vector(M), nrow=length(M), ncol=1)
+#    for (i in vec) {
+#        #face <- ifelse(factorial(i) != 0, factorial(i), 1)
+#        demo <- demo * factorial(i)    
+#    }
+#    demo <- demo * factorial(sum)
+#    return (nume / demo)
+#}
+#
+#m1 <- matrix(c(6, 4, 2, 8), nrow=2)
+#p1 <- fish(m1)
+#m2 <- matrix(c(7, 3, 1, 9), nrow=2)
+#p2 <- fish(m2)
+#m3 <- matrix(c(8, 2, 0,10), nrow=2)
+#p3 <- fish(m3)
+#p  <- (p1 + p2 + p3) * 2
+#print(paste("fisher p = ", p))
+#
+## フィッシャーの正確確率は、セルの期待頻度５未満程度
+## (つまり、総頻度が5 * 行数 * 列数未満の場合)
+## 使う場面がある
+## 考え方としては、独立を前提としている場合、
+## 最も考えにくい場合
+## (この場合、列２の２－８は独立と言えないような値)
+## の両端の両側累積確率を求める
+## (つまり、列２が１－９、０－１０の場合と、
+## その反対側の確率の累積)
+## 棄却域を両端５％とするならば、
+## 上記確率は１０％を超えるため、
+## 独立性がない(２カテゴリ間に相関がある)とは言えない
 
-fish <- function (M) {
-    sum   <- sum(M)
-    r.sum <- rowSums(M)
-    c.sum <- colSums(M)
-    nume  <- 1
-    demo  <- 1
-    for (i in c(rowSums(M), colSums(M))) {
-        #face <- ifelse(factorial(i) != 0, factorial(i), 1)
-        nume <- nume * factorial(i)    
-    }
-    vec <- matrix(as.vector(M), nrow=length(M), ncol=1)
-    for (i in vec) {
-        #face <- ifelse(factorial(i) != 0, factorial(i), 1)
-        demo <- demo * factorial(i)    
-    }
-    demo <- demo * factorial(sum)
-    return (nume / demo)
-}
+#print(fisher.test(m1))
+#fisher  <- read.csv(paste(Sys.getenv("USERPROFILE"), "\\project\\hysr\\06_two_data\\fisher.csv", sep=""))
+#attach(fisher)
+#
+#print(fisher.test(tree, nests))
+## fisher.text(MATRIX) ... フィッシャーの正確確率検定を行う
+##    MATRIX ... 検定対象の分割表を指定数する
+## fisher.text(VEC1, VEC2)
+##    VEC1, VEC2 ... 要因水準１、２
 
-m1 <- matrix(c(6, 4, 2, 8), nrow=2)
-p1 <- fish(m1)
-m2 <- matrix(c(7, 3, 1, 9), nrow=2)
-p2 <- fish(m2)
-m3 <- matrix(c(8, 2, 0,10), nrow=2)
-p3 <- fish(m3)
-p  <- (p1 + p2 + p3) * 2
-print(paste("fisher p = ", p))
 
-# フィッシャーの正確確率は、セルの期待頻度５未満程度
-# (つまり、総頻度が5 * 行数 * 列数未満の場合)
-# 使う場面がある
-# 考え方としては、独立を前提としている場合、
-# 最も考えにくい場合
-# (この場合、列２の２－８は独立と言えないような値)
-# の両端の両側累積確率を求める
-# (つまり、列２が１－９、０－１０の場合と、
-# その反対側の確率の累積)
+##p.118 相関と共分散
+#ts      <- read.csv(paste(Sys.getenv("USERPROFILE"), "\\project\\hysr\\06_two_data\\twosample.csv", sep=""))
+#attach(ts)
+##plot(x, y, pch=21, col="blue", bg="red")
+#print(cor(x, y))
 
+
+#p.119 変数間の差の相関と分散
+#w.table <- read.csv(paste(Sys.getenv("USERPROFILE"), "\\project\\hysr\\06_two_data\\water.table.csv", sep=""))
+#attach(w.table)
+#print(cor(Summer, Winter))
+#print(cor.test(Summer, Winter))
+## cor.test(VEC1, VEC2) ... 相関関係の有意性を検定する
+
+
+#p.121 階層に依存した相関
+p       <- read.csv(paste(Sys.getenv("USERPROFILE"), "\\project\\hysr\\06_two_data\\productivity.csv", sep=""))
+attach(p)
+#plot(p, mammals, pch=16, col="blue")
+
+#print(cor.test(productivity, mammals, method="spearman"))
+
+plot(mammals, bg=(2*as.numeric(region)%%3+2), pch=(as.numeric(region)%%5+21))
 
 
 
